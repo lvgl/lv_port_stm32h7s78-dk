@@ -41,7 +41,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+extern LTDC_HandleTypeDef hltdc;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

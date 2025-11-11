@@ -21,6 +21,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "lvgl/lvgl.h"
+#include "lvgl/demos/lv_demos.h"
+#include "lvgl_port.h"
 
 /* USER CODE END Includes */
 
@@ -131,6 +134,12 @@ int main(void)
   MX_ICACHE_GPU2D_Init();
   /* USER CODE BEGIN 2 */
 
+  lvgl_port_init();
+
+  // lv_demo_benchmark();
+  lv_demo_widgets();
+  // lv_obj_center(lv_roller_create(lv_screen_active()));
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -138,7 +147,10 @@ int main(void)
   while (1)
   {
 	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-	  HAL_Delay(100);
+
+    lv_timer_handler();
+
+    HAL_Delay(1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
