@@ -44,17 +44,20 @@ void lvgl_port_init(void)
 
     lv_tick_set_cb(HAL_GetTick);
 
-    // static __attribute__((aligned(32))) uint8_t main_fb[800 * 480 * 2];
-    uint8_t * main_fb = (uint8_t *)(uintptr_t)0x90000000;
+    __attribute__((aligned(32)))
+    __attribute__((section("Framebuffer")))
+    static uint8_t main_fb[800 * 480 * 2];
     HAL_LTDC_SetAddress(&hltdc, (uint32_t)main_fb, 0);
 
 #if 1
-    uint8_t * buf_direct_2 = main_fb + (800 * 480 * 2);
+    __attribute__((aligned(32)))
+    __attribute__((section("Framebuffer")))
+    static uint8_t buf_direct_2[800 * 480 * 2];
     lv_st_ltdc_create_direct(main_fb, buf_direct_2, 0);
 #else
     static __attribute__((aligned(32))) uint8_t buf_partial_1[800 * 40 * 2];
-    // static __attribute__((aligned(32))) uint8_t buf_partial_2[sizeof(buf_partial_1)];
-    lv_st_ltdc_create_partial(buf_partial_1, NULL, sizeof(buf_partial_1), 0);
+    static __attribute__((aligned(32))) uint8_t buf_partial_2[sizeof(buf_partial_1)];
+    lv_st_ltdc_create_partial(buf_partial_1, buf_partial_2, sizeof(buf_partial_1), 0);
 #endif
 
     lv_indev_t * indev = lv_indev_create();
@@ -62,7 +65,7 @@ void lvgl_port_init(void)
     lv_indev_set_read_cb(indev, touch_read);
 }
 
-void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     if (GPIO_Pin == TP_IRQ_Pin)
     {

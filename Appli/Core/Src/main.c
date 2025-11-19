@@ -136,8 +136,8 @@ int main(void)
 
   lvgl_port_init();
 
-  // lv_demo_benchmark();
-  lv_demo_widgets();
+  lv_demo_benchmark();
+  // lv_demo_widgets();
   // lv_obj_center(lv_roller_create(lv_screen_active()));
 
   /* USER CODE END 2 */
@@ -626,7 +626,7 @@ static void MPU_Config(void)
   /** Initializes and configures the Region and the memory to be protected
   */
   MPU_InitStruct.Number = MPU_REGION_NUMBER2;
-  MPU_InitStruct.Size = MPU_REGION_SIZE_2MB;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_128MB;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
 
   HAL_MPU_ConfigRegion(&MPU_InitStruct);

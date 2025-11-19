@@ -53,8 +53,7 @@ MEMORY
   SRAMAHB   (rw)  : ORIGIN = 0x30000000, LENGTH = 0x00008000
   BKPSRAM   (rw)  : ORIGIN = 0x38800000, LENGTH = 0x00001000
 
-  FLASH     (xr)  : ORIGIN = 0x70000000, LENGTH = 0x00200000
-  FLASH_GFX (r)   : ORIGIN = 0x70200000, LENGTH = 0x07e00000
+  FLASH     (xr)  : ORIGIN = 0x70000000, LENGTH = 0x08000000
   EXTRAM    (rw)  : ORIGIN = 0x90000000, LENGTH = 0x02000000
 }
 
@@ -203,11 +202,7 @@ SECTIONS
   
   BufferSection (NOLOAD) :
   {
-    *(TouchGFX_Framebuffer TouchGFX_Framebuffer.*)
-    *(.gnu.linkonce.r.*)
-    . = ALIGN(0x8);
-
-    *(Nemagfx_Stencil_Buffer Nemagfx_Stencil_Buffer.*)
+    *(Framebuffer Framebuffer.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x8);
   } >EXTRAM
@@ -218,25 +213,4 @@ SECTIONS
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x8);
   } >RAM_CMD
-  
-    FontFlashSection :
-  {
-    *(FontFlashSection FontFlashSection.*)
-    *(.gnu.linkonce.r.*)
-    . = ALIGN(0x4);
-  } >FLASH_GFX
-
-  TextFlashSection :
-  {
-    *(TextFlashSection TextFlashSection.*)
-    *(.gnu.linkonce.r.*)
-    . = ALIGN(0x4);
-  } >FLASH_GFX
-
-  ExtFlashSection :
-  {
-    *(ExtFlashSection ExtFlashSection.*)
-    *(.gnu.linkonce.r.*)
-    . = ALIGN(0x4);
-  } >FLASH_GFX
 }
