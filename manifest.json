@@ -1,5 +1,5 @@
 {
-    "name": "STM32U5G9J-DK2",
+    "name": "STM32H7S78-DK",
     "maintainer": "LVGL",
     "hostOperatingsystem": [
         "Linux",
@@ -13,9 +13,9 @@
         "chipVendor": "ST",
         "manufacturer": "ST",
         "specs": {
-            "MCU": "STM32U5G9J (Cotex-M33, 160MHz)",
-            "RAM": "3MB (internal only)",
-            "Flash": "4MB (internal only)",
+            "MCU": "STM32H7S7L8 (Cotex-M7, 600MHz)",
+            "RAM": "620KB internal, 32MB external",
+            "Flash": "64KB internal, 128MB External",
             "GPU": "Neo-Chrom (GPU2D), Chrom-Art (DMA2D)",
             "Resolution": "800x480",
             "Display Size": "5.0”",
@@ -26,20 +26,19 @@
             "Touch Pad": "Capacitive"
         }
     },
-    "description": "This STM32U5 series devboard is part of the family of ultra low power ST MCUs. It has a large amount of internal memory and the embedded Neo-Chrom GPU which accelerates LVGL rendering. With such a large internal SRAM, direct double buffering is possible at the great speed of internal SRAM.",
-    "shortDescription": "STM32U5 with NeoChrome on a 800x480 screen.",
-    "urlToClone": "https://github.com/lvgl/lv_port_stm32u5g9j-dk2.git",
+    "description": "This is an H7 series board, touted for \"MPU UIs on an MCU\". It has a 600MHz ARM Cortex-M7 MCU with a memory protection unit. There is an unusually small internal flash and SRAM for such a powerful MCU, but it's compensated by 128MB flash and 32MB PSRAM. A very simple bootloader is needed to jump from the internal flash to the external flash at reset.",
+    "shortDescription": "Fast H7 with flexible boot options.",
+    "urlToClone": "https://github.com/lvgl/lv_port_stm32h7s78-dk.git",
     "logos": [
         "https://raw.githubusercontent.com/lvgl/project-creator/master/meta/images/st/logo.svg"
     ],
-    "image": "https://raw.githubusercontent.com/lvgl/lv_port_stm32u5g9j-dk2/master/board_images/stm32u5g9j-dk2.webp",
     "buy_now_links": [
-        "https://estore.st.com/en/stm32u5g9j-dk2-cpn.html"
+        "https://www.st.com/en/evaluation-tools/stm32h7s78-dk.html"
     ],
     "branches": [
-        "release/v9.2"
+        "release/v9.4"
     ],
-    "getStartedInstructions": "1. Connect a USB-C cable to the USB-C port labeled STLINK USB CN8 and your PC. \n2. Install [STM32 CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)\n3. Open STM32CubeIDE and open project:` File => Open Projects from File System... => Directory => Select the \"STM32CubeIde\" folder => Finish`\n4. Click the Run button to flash the project",
+    "getStartedInstructions": "- In STM32CubeIDE, click **File > Open Projects from File System**, click **Directory**, choose the cloned repo, and then click **Finish**.\n- You will need to build and upload the bootloader just once, unless you modify it.\n  - Click to highlight STM32H7S78-DK_Boot in the Project Explorer side panel\n  - Click the hammer icon to build the bootloader.\n  - Click the play icon to upload the bootloader to the board.\n- Click to highlight STM32H7S78-DK_Appli in the Project Explorer side panel\n- Click the hammer icon to build the application. The \"Debug\" build mode is used, even though full optimization is enabled.\n- Click the play icon to upload the application to the board.\n- After the application has been uploaded, press the black reset button (B1/U6) and the application will run.",
     "settings": [
         {
             "type": "dropdown",
@@ -59,7 +58,7 @@
                 {
                     "toReplace": " *#define LV_USE_SYSMON .*",
                     "newContent": "    #define LV_USE_SYSMON {value}",
-                    "filePath": "Core/Inc/lv_conf.h"
+                    "filePath": "STM32CubeIDE/Appli/lv_conf.h"
                 }
             ]
         }

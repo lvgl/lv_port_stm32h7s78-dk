@@ -19,6 +19,28 @@ You can purchase an STM32H7S78-DK from https://www.st.com/en/evaluation-tools/st
     <img src="https://github.com/user-attachments/assets/5a410a4a-1270-4606-a0b0-444c8805af88" width="75%">
 </a> -->
 
+The configuration is double-buffered direct mode with the LTDC driver and NeoChrom.
+
+| Name                      | Avg. CPU | Avg. FPS | Avg. time | render time | flush time |
+| :------------------------ | -------: | -------: | --------: | ----------: | ---------: |
+| Empty screen              | 41%      | 59       | 4         | 2           | 2          |
+| Moving wallpaper          | 60%      | 59       | 10        | 6           | 4          |
+| Single rectangle          | 69%      | 59       | 10        | 0           | 10         |
+| Multiple rectangles       | 37%      | 59       | 5         | 2           | 3          |
+| Multiple RGB images       | 65%      | 59       | 7         | 2           | 5          |
+| Multiple ARGB images      | 81%      | 60       | 9         | 2           | 7          |
+| Rotated ARGB images       | 58%      | 59       | 6         | 1           | 5          |
+| Multiple labels           | 85%      | 43       | 18        | 14          | 4          |
+| Screen sized text         | 93%      | 29       | 30        | 18          | 12         |
+| Multiple arcs             | 56%      | 60       | 8         | 3           | 5          |
+| Containers                | 46%      | 60       | 5         | 3           | 2          |
+| Containers with overlay   | 88%      | 30       | 30        | 22          | 8          |
+| Containers with opa       | 50%      | 59       | 6         | 4           | 2          |
+| Containers with opa_layer | 50%      | 59       | 7         | 6           | 1          |
+| Containers with scrolling | 75%      | 59       | 11        | 11          | 0          |
+| Widgets demo              | 92%      | 33       | 19        | 18          | 1          |
+| All scenes avg.           | 65%      | 52       | 11        | 7           | 4          |
+
 ## Specification
 
 ### CPU and Memory
@@ -54,7 +76,7 @@ You can purchase an STM32H7S78-DK from https://www.st.com/en/evaluation-tools/st
 ### Run the project
 - Clone this repository repository:
   ```shell
-  git clone --recurse-submodules https://github.com/lvgl/lv_port_stm32h7s78-dk.git 
+  git clone --recurse-submodules https://github.com/lvgl/lv_port_stm32h7s78-dk.git
   ```
 - In STM32CubeIDE, click **File > Open Projects from File System**, click **Directory**,
   choose the cloned repo, and then click **Finish**.
@@ -84,26 +106,14 @@ Interactive debugging is available over USB-C
 
 ## Notes
 
-Some things were changed from the default code generation.
+`Appli/Core/Src/lvgl_port.c` is where the LVGL display is created.
+You can change the buffering configuration there.
 
-The two linker scripts were modified
-to reserve 750kb of RAM at the start of the region for a framebuffer.
-
-```
-/* Memories definition */
-MEMORY
-{
-  FLASH	(rx)	: ORIGIN = 0x08000000, LENGTH = 4096K
-  RAM2	(xrw)	: ORIGIN = 0x20000000, LENGTH = 750K
-  RAM	(xrw)	: ORIGIN = 0x200bb800, LENGTH = 2258K
-}
-```
-
-`RAM2` is not referenced anywhere. Instead, `Core/Src/lvgl_port.c` hardcodes the memory address `0x20000000`
-for the LTDC driver. Also, in the .ioc config, LTDC has the framebuffer address set to `0x20000000`.
-The 750kb size is 800x480x2 bytes.
-
-The second framebuffer is declared in `Core/Src/lvgl_port.c` and is the same size.
+The framebuffers are the only thing kept in external RAM.
+`STM32CubeIDE/Appli/STM32H7S7L8HXH_RAMxspi1_ROMxspi2.ld` is the
+relevant linker script. You can see in `lvgl_port.c` that the
+buffers are placed in the linker section called "Framebuffer"
+which is in external RAM.
 
 The display is capable of 24 bit color depth but LTDC is configured as 16 bits for
 reduced memory usage.

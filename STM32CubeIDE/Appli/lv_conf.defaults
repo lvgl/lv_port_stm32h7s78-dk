@@ -1,11 +1,13 @@
 LV_COLOR_DEPTH             16
-LV_MEM_SIZE                (192 * 1024U)
+LV_MEM_SIZE                (300 * 1024U)
+LV_DRAW_LAYER_SIMPLE_BUF_SIZE    (48 * 1024)
+LV_DEF_REFR_PERIOD  16
 LV_USE_ST_LTDC             1
 LV_ST_LTDC_USE_DMA2D_FLUSH 1
-LV_USE_NEMA_GFX            0
+LV_USE_NEMA_GFX            1
 LV_NEMA_STM32_HAL_INCLUDE  <stm32h7rsxx_hal.h>
 LV_USE_NEMA_HAL            LV_NEMA_HAL_STM32
-LV_USE_NEMA_VG             1
+LV_USE_NEMA_VG             0
 LV_NEMA_GFX_MAX_RESX       800
 LV_NEMA_GFX_MAX_RESY       480
 LV_USE_SYSMON              1

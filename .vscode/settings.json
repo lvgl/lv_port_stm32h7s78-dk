@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "Kconfig": "plain text",
+        "defconfig": "plain text",
+        "freertosconfig.h": "c"
+    }
+}

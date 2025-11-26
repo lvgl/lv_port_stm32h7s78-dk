@@ -138,7 +138,6 @@ int main(void)
 
   lv_demo_benchmark();
   // lv_demo_widgets();
-  // lv_obj_center(lv_roller_create(lv_screen_active()));
 
   /* USER CODE END 2 */
 
