@@ -1,4 +1,4 @@
 [Appli:ProjectFiles]
 [Appli:Groups]
-Application/User/Appli/TouchGFX/target=../Appli/TouchGFX/target/CortexMMCUInstrumentation.cpp
+Application/User/LVGL=../Appli/Core/Src/lvgl_port.c
 [Appli:Others]
