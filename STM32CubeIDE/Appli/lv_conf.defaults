@@ -5,7 +5,9 @@ LV_DEF_REFR_PERIOD  16
 LV_USE_ST_LTDC             1
 LV_ST_LTDC_USE_DMA2D_FLUSH 1
 LV_USE_NEMA_GFX            1
+LV_USE_NEMA_LIB            LV_NEMA_LIB_M7
 LV_NEMA_STM32_HAL_INCLUDE  <stm32h7rsxx_hal.h>
+LV_NEMA_STM32_HAL_ATTRIBUTE_POOL_MEM __attribute__((section("Nemagfx_Memory_Pool_Buffer")))
 LV_USE_NEMA_HAL            LV_NEMA_HAL_STM32
 LV_USE_NEMA_VG             0
 LV_NEMA_GFX_MAX_RESX       800
